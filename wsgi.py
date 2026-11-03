@@ -19,4 +19,10 @@ app = application
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", "5000"))
+    if os.environ.get("BPS_OPEN_BROWSER"):
+        import threading
+        import webbrowser
+        threading.Timer(1.5, webbrowser.open, [f"http://127.0.0.1:{port}/"]).start()
+    print(f"\n  Blueprint Studio is running at http://127.0.0.1:{port}/"
+          "\n  Leave this window open while you work; close it to stop.\n")
     application.run(host="127.0.0.1", port=port, debug=bool(os.environ.get("FLASK_DEBUG")))

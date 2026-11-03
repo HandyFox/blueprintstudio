@@ -26,6 +26,19 @@ Everyone signs in. Drawings live on your server in personal folders and a shared
 
 ## Running it locally
 
+### Windows
+
+1. Install [Python 3.10+](https://www.python.org/downloads/) — tick **Add python.exe to PATH**.
+2. Download this repo (**Code → Download ZIP**) and unzip it, e.g. to `Documents\blueprintstudio`.
+3. Double-click **`start-windows.bat`**. The first run sets up (about a minute); then your
+   browser opens at http://127.0.0.1:5000. Keep the black window open while you work —
+   closing it stops the app.
+
+Your drawings and accounts are saved in the `data` folder next to it. To update,
+download the new ZIP and copy your `data` folder into it.
+
+### Mac / Linux
+
 ```bash
 python3 -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt
