@@ -1,0 +1,12 @@
+.git
+.github
+data
+tests
+deploy
+*.md
+.env
+.venv
+venv
+__pycache__
+*.pyc
+sample.bpsj

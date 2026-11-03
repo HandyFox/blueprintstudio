@@ -1,0 +1,20 @@
+# Run without Docker, as a systemd service.
+#   sudo cp deploy/blueprintstudio.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now blueprintstudio
+[Unit]
+Description=Blueprint Studio
+After=network.target
+
+[Service]
+User=bps
+Group=bps
+WorkingDirectory=/opt/blueprintstudio
+EnvironmentFile=/opt/blueprintstudio/.env
+Environment=BLUEPRINT_STUDIO_DATA_DIR=/opt/blueprintstudio/data
+Environment=GUNICORN_BIND=127.0.0.1:8070
+ExecStart=/opt/blueprintstudio/.venv/bin/gunicorn -c gunicorn.conf.py wsgi:app
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

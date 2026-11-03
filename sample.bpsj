@@ -1,0 +1,264 @@
+{
+  "version": 1,
+  "settings": {
+    "project_name": "Sample House",
+    "project_address": "123 Maple Street",
+    "drawing_title": "First Floor Plan",
+    "drawing_number": "A-101",
+    "designer_name": "Blueprint Studio",
+    "revision": "1",
+    "print_scale": 0.020833333333333332,
+    "print_scale_label": "1/4\" = 1'-0\"",
+    "grid_spacing": 12.0,
+    "grid_subdivisions": 12,
+    "grid_visible": true,
+    "snap_to_grid": true,
+    "snap_to_endpoints": true,
+    "snap_to_midpoints": true,
+    "snap_to_perpendicular": true,
+    "ortho_mode": false,
+    "default_wall_thickness": 4.5,
+    "default_wall_height": 96.0,
+    "default_exterior_thickness": 6.5,
+    "default_door_width": 32.0,
+    "default_door_height": 80.0,
+    "default_window_width": 36.0,
+    "default_window_height": 48.0,
+    "default_window_sill": 36.0
+  },
+  "layers": [
+    {
+      "name": "Walls",
+      "color": "#1f1f1f",
+      "visible": true,
+      "locked": false
+    },
+    {
+      "name": "Openings",
+      "color": "#0f3d6e",
+      "visible": true,
+      "locked": false
+    },
+    {
+      "name": "Dimensions",
+      "color": "#7a4a00",
+      "visible": true,
+      "locked": false
+    },
+    {
+      "name": "Rooms",
+      "color": "#374151",
+      "visible": true,
+      "locked": false
+    },
+    {
+      "name": "Annotations",
+      "color": "#1f1f1f",
+      "visible": true,
+      "locked": false
+    },
+    {
+      "name": "Plot",
+      "color": "#0e6b3b",
+      "visible": true,
+      "locked": false
+    },
+    {
+      "name": "Furniture",
+      "color": "#4b5563",
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "items": [
+    {
+      "type": "wall",
+      "start": [
+        0,
+        0
+      ],
+      "end": [
+        480,
+        0
+      ],
+      "thickness": 6.5,
+      "is_exterior": true,
+      "openings": [
+        {
+          "kind": "window",
+          "offset": 120,
+          "width": 36,
+          "height": 48,
+          "sill": 36,
+          "swing": "right_in"
+        },
+        {
+          "kind": "door",
+          "offset": 350,
+          "width": 36,
+          "height": 80,
+          "sill": 0,
+          "swing": "right_in"
+        }
+      ]
+    },
+    {
+      "type": "wall",
+      "start": [
+        480,
+        0
+      ],
+      "end": [
+        480,
+        360
+      ],
+      "thickness": 6.5,
+      "is_exterior": true,
+      "openings": [
+        {
+          "kind": "window",
+          "offset": 100,
+          "width": 36,
+          "height": 48,
+          "sill": 36,
+          "swing": "right_in"
+        },
+        {
+          "kind": "window",
+          "offset": 260,
+          "width": 36,
+          "height": 48,
+          "sill": 36,
+          "swing": "right_in"
+        }
+      ]
+    },
+    {
+      "type": "wall",
+      "start": [
+        480,
+        360
+      ],
+      "end": [
+        0,
+        360
+      ],
+      "thickness": 6.5,
+      "is_exterior": true,
+      "openings": []
+    },
+    {
+      "type": "wall",
+      "start": [
+        0,
+        360
+      ],
+      "end": [
+        0,
+        0
+      ],
+      "thickness": 6.5,
+      "is_exterior": true,
+      "openings": [
+        {
+          "kind": "window",
+          "offset": 180,
+          "width": 48,
+          "height": 48,
+          "sill": 36,
+          "swing": "right_in"
+        }
+      ]
+    },
+    {
+      "type": "wall",
+      "start": [
+        240,
+        0
+      ],
+      "end": [
+        240,
+        200
+      ],
+      "thickness": 4.5,
+      "is_exterior": false,
+      "openings": [
+        {
+          "kind": "door",
+          "offset": 100,
+          "width": 32,
+          "height": 80,
+          "sill": 0,
+          "swing": "right_in"
+        }
+      ]
+    },
+    {
+      "type": "wall",
+      "start": [
+        240,
+        200
+      ],
+      "end": [
+        480,
+        200
+      ],
+      "thickness": 4.5,
+      "is_exterior": false,
+      "openings": []
+    },
+    {
+      "type": "dimension",
+      "p1": [
+        0,
+        0
+      ],
+      "p2": [
+        480,
+        0
+      ],
+      "offset": -40,
+      "text_height": 8
+    },
+    {
+      "type": "dimension",
+      "p1": [
+        480,
+        0
+      ],
+      "p2": [
+        480,
+        360
+      ],
+      "offset": 40,
+      "text_height": 8
+    },
+    {
+      "type": "room",
+      "name": "Living",
+      "pos": [
+        120,
+        90
+      ],
+      "area": 24000
+    },
+    {
+      "type": "room",
+      "name": "Kitchen",
+      "pos": [
+        360,
+        100
+      ],
+      "area": 24000
+    },
+    {
+      "type": "room",
+      "name": "Master Bedroom",
+      "pos": [
+        240,
+        290
+      ],
+      "area": 36000
+    }
+  ]
+}

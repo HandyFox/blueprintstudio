@@ -1,0 +1,18 @@
+# Caddy gets HTTPS certificates automatically.
+
+# Own subdomain:
+plans.example.com {
+    request_body {
+        max_size 32MB
+    }
+    reverse_proxy 127.0.0.1:8070
+}
+
+# …or under a path of a site you already serve. Keep the path (use `handle`,
+# not `handle_path`) and set BLUEPRINT_STUDIO_PREFIX=/blueprints in .env:
+# example.com {
+#     redir /blueprints /blueprints/
+#     handle /blueprints/* {
+#         reverse_proxy 127.0.0.1:8070
+#     }
+# }

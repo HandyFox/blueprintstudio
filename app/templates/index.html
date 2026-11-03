@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="{{ base_path }}">
+    <title>Blueprint Studio</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}?v={{ asset_version }}">
+</head>
+<body>
+<header id="topbar">
+    <div class="brand">BLUEPRINT <span>STUDIO</span></div>
+
+    <nav class="menubar">
+        <div class="menu" data-menu="file">
+            <button class="menu-btn" type="button">File</button>
+            <div class="menu-list">
+                <button data-cmd="new">New drawing</button>
+                <button data-cmd="open">Open from server…<kbd>Ctrl+O</kbd></button>
+                <button data-cmd="save">Save<kbd>Ctrl+S</kbd></button>
+                <button data-cmd="saveAs">Save as…<kbd>Ctrl+Shift+S</kbd></button>
+                <hr>
+                <button data-cmd="importFile">Open file from this computer…</button>
+                <button data-cmd="downloadFile">Download a copy (.bpsj)</button>
+                <hr>
+                <button data-cmd="exportPdf">Export PDF…<kbd>Ctrl+P</kbd></button>
+            </div>
+        </div>
+        <div class="menu" data-menu="edit">
+            <button class="menu-btn" type="button">Edit</button>
+            <div class="menu-list">
+                <button data-cmd="undo">Undo<kbd>Ctrl+Z</kbd></button>
+                <button data-cmd="redo">Redo<kbd>Ctrl+Y</kbd></button>
+                <hr>
+                <button data-cmd="duplicate">Duplicate<kbd>Ctrl+D</kbd></button>
+                <button data-cmd="rotate">Rotate 90°<kbd>R</kbd></button>
+                <button data-cmd="delete">Delete<kbd>Del</kbd></button>
+                <hr>
+                <button data-cmd="selectAll">Select all<kbd>Ctrl+A</kbd></button>
+            </div>
+        </div>
+        <div class="menu" data-menu="view">
+            <button class="menu-btn" type="button">View</button>
+            <div class="menu-list">
+                <button data-cmd="zoomFit">Zoom to drawing<kbd>F</kbd></button>
+                <button data-cmd="zoomIn">Zoom in<kbd>+</kbd></button>
+                <button data-cmd="zoomOut">Zoom out<kbd>−</kbd></button>
+                <hr>
+                <button data-cmd="toggleGrid" data-check="grid_visible">Grid</button>
+                <button data-cmd="toggleSnap" data-check="snap_to_grid">Snap to grid</button>
+                <button data-cmd="toggleOrtho" data-check="ortho_mode">Ortho (straight lines)<kbd>F8</kbd></button>
+            </div>
+        </div>
+        <div class="menu" data-menu="kitchen">
+            <button class="menu-btn" type="button">Kitchen</button>
+            <div class="menu-list">
+                <button data-cmd="libCabinets">Cabinet library<kbd>C</kbd></button>
+                <button data-cmd="libFixtures">Appliances &amp; fixtures<kbd>X</kbd></button>
+                <hr>
+                <button data-cmd="elevations">Elevations…</button>
+                <button data-cmd="cabinetList">Cabinet list…</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="doc-info">
+        <span id="project-title" class="project-title">Untitled Project</span>
+        <span id="file-status" class="file-status local">Not saved to the server</span>
+    </div>
+
+    <div class="top-actions">
+        <button class="icon-btn" data-cmd="undo" title="Undo (Ctrl+Z)">
+            <svg viewBox="0 0 20 20"><path d="M7 5 3 9l4 4M3.5 9H12a5 5 0 0 1 0 10h-2"/></svg></button>
+        <button class="icon-btn" data-cmd="redo" title="Redo (Ctrl+Y)">
+            <svg viewBox="0 0 20 20"><path d="m13 5 4 4-4 4M16.5 9H8a5 5 0 0 0 0 10h2"/></svg></button>
+        <span class="sep"></span>
+        <button class="icon-btn" data-cmd="zoomOut" title="Zoom out">
+            <svg viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M6 8.5h5M13 13l4 4"/></svg></button>
+        <button class="icon-btn" data-cmd="zoomFit" title="Zoom to drawing (F)">
+            <svg viewBox="0 0 20 20"><path d="M3 7V3h4M13 3h4v4M17 13v4h-4M7 17H3v-4"/></svg></button>
+        <button class="icon-btn" data-cmd="zoomIn" title="Zoom in">
+            <svg viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M6 8.5h5M8.5 6v5M13 13l4 4"/></svg></button>
+        <span class="sep"></span>
+        <label class="scale-pick" title="Print scale used for the PDF">
+            <span>Scale</span><select id="scale-select"></select>
+        </label>
+        <button class="btn primary" data-cmd="exportPdf">Export PDF</button>
+        <div class="menu user-menu" data-menu="user">
+            <button class="menu-btn user-btn" type="button">
+                <svg viewBox="0 0 20 20"><circle cx="10" cy="7" r="3.5"/><path d="M3.5 17a6.5 6.5 0 0 1 13 0"/></svg>
+                <span id="user-name">…</span></button>
+            <div class="menu-list right">
+                <button data-cmd="changePassword">Change password…</button>
+                <button data-cmd="manageUsers" id="menu-manage-users" class="hidden">Manage users…</button>
+                <hr>
+                <button data-cmd="logout">Sign out</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main id="workspace">
+    <nav id="toolrail">
+        <button class="tool" data-tool="select" title="Select & move (V)">
+            <svg viewBox="0 0 20 20"><path d="M5 3l10 6-4.5 1.2L13 16l-2 1-2.5-5.5L5 15z"/></svg><span>Select</span></button>
+        <div class="rail-label">Build</div>
+        <button class="tool" data-tool="wall" title="Interior wall (W)">
+            <svg viewBox="0 0 20 20"><path d="M3 8h14v4H3z"/></svg><span>Wall</span></button>
+        <button class="tool" data-tool="wallExt" title="Exterior wall (E)">
+            <svg viewBox="0 0 20 20"><path d="M3 7h14v6H3zM6 7l-3 3M10 7l-6 6M14 7l-6 6M17 9l-4 4"/></svg><span>Ext. wall</span></button>
+        <button class="tool" data-tool="door" title="Door (D) — click on a wall">
+            <svg viewBox="0 0 20 20"><path d="M3 16h3M14 16h3M6 16V5M6 5a11 11 0 0 1 11 11"/></svg><span>Door</span></button>
+        <button class="tool" data-tool="window" title="Window (N) — click on a wall">
+            <svg viewBox="0 0 20 20"><path d="M3 8h14v4H3zM3 10h14"/></svg><span>Window</span></button>
+        <div class="rail-label">Place</div>
+        <button class="tool" data-tool="cabinets" title="Kitchen cabinets (C)">
+            <svg viewBox="0 0 20 20"><path d="M3 4h14v12H3zM10 4v12M7.5 9v2M12.5 9v2"/></svg><span>Cabinets</span></button>
+        <button class="tool" data-tool="fixtures" title="Appliances, plumbing, HVAC, furniture (X)">
+            <svg viewBox="0 0 20 20"><rect x="4" y="3" width="12" height="7" rx="2"/><ellipse cx="10" cy="13.5" rx="4.5" ry="3.5"/></svg><span>Fixtures</span></button>
+        <div class="rail-label">Notes</div>
+        <button class="tool" data-tool="dimension" title="Dimension (M)">
+            <svg viewBox="0 0 20 20"><path d="M3 6v8M17 6v8M3 10h14M5 8l-2 2 2 2M15 8l2 2-2 2"/></svg><span>Dimension</span></button>
+        <button class="tool" data-tool="room" title="Room label (L)">
+            <svg viewBox="0 0 20 20"><path d="M3 4h14v12H3z"/><path d="M7 9h6M8 12h4"/></svg><span>Room</span></button>
+        <button class="tool" data-tool="text" title="Note (T)">
+            <svg viewBox="0 0 20 20"><path d="M5 5h10M10 5v11M8 16h4"/></svg><span>Note</span></button>
+        <div class="rail-label">Site</div>
+        <button class="tool" data-tool="plot" title="Lot lines (P)">
+            <svg viewBox="0 0 20 20"><path d="M4 15 3 6l8-3 6 6-3 7z" stroke-dasharray="3 1.5"/></svg><span>Lot</span></button>
+        <button class="tool" data-tool="plotBearing" title="Lot from survey bearings (B)">
+            <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 3v3M10 10l4-5"/></svg><span>Bearings</span></button>
+    </nav>
+
+    <aside id="library" class="hidden">
+        <div class="lib-head">
+            <div class="lib-tabs">
+                <button data-lib="cabinets" class="active">Cabinets</button>
+                <button data-lib="fixtures">Fixtures</button>
+            </div>
+            <button class="icon-btn small" id="lib-close" title="Close library">
+                <svg viewBox="0 0 20 20"><path d="M5 5l10 10M15 5 5 15"/></svg></button>
+        </div>
+        <div class="lib-controls">
+            <select id="lib-finish" title="Cabinet finish"></select>
+            <input id="lib-search" type="search" placeholder="Search — e.g. 36, sink, drawer">
+        </div>
+        <div id="lib-chips" class="lib-chips"></div>
+        <div id="lib-list" class="lib-list"></div>
+        <div class="lib-foot" id="lib-foot">Click an item, then click in the plan. It snaps to walls and to the cabinet next to it.</div>
+    </aside>
+
+    <section id="canvas-area">
+        <svg id="canvas" tabindex="0" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div id="canvas-help" class="canvas-help hidden">
+            <b>Start drawing</b>
+            <span>Pick <b>Wall</b> and click corner to corner — type a length and press Enter for exact walls.</span>
+            <span>Then add doors, windows, cabinets and fixtures from the left.</span>
+            <span>Scroll to zoom · middle-drag or Space+drag to pan.</span>
+        </div>
+    </section>
+
+    <aside id="sidebar">
+        <div class="side-tabs">
+            <button data-side="properties" class="active">Properties</button>
+            <button data-side="layers">Layers</button>
+        </div>
+        <div id="properties" class="side-pane"></div>
+        <div id="layers" class="side-pane hidden"></div>
+    </aside>
+</main>
+
+<footer id="statusbar">
+    <span id="tool-name" class="status-tool">Select</span>
+    <span id="tool-hint" class="status-hint"></span>
+    <span class="status-spacer"></span>
+    <span id="coords" class="status-coords"></span>
+    <button id="mode-snap" class="status-mode" data-cmd="toggleSnap" title="Snap to grid">SNAP</button>
+    <button id="mode-ortho" class="status-mode" data-cmd="toggleOrtho" title="Ortho (F8)">ORTHO</button>
+    <span id="mode-zoom" class="status-mode plain">100%</span>
+</footer>
+
+<script id="fixture-data" type="application/json">{{ fixtures_json|safe }}</script>
+<script type="module" src="{{ url_for('static', filename='js/app.js') }}?v={{ asset_version }}"></script>
+</body>
+</html>
