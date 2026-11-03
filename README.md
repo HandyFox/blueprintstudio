@@ -55,6 +55,7 @@ nano .env        # pick a port, and optionally the first admin's name/password
 ### 2a. Run it with Docker (recommended)
 
 ```bash
+sudo chown -R 1000:1000 data                # the container runs as uid 1000
 docker compose up -d --build
 curl http://127.0.0.1:8070/api/health      # {"ok": true, ...}
 ```
